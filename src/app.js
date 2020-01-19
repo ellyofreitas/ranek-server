@@ -21,6 +21,10 @@ class App {
     this.server.use(express.json());
     this.server.use(cors());
     this.server.use('/', express.static(resolve(__dirname, '..', 'public')));
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
   }
 
   routes() {
