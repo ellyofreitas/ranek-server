@@ -86,13 +86,16 @@ class ProductController {
     }
 
     const product = await Product.create({ ...req.body, user_id: req.userId });
-
+    console.log(req.files);
     if (req.files && req.files.length) {
       const files = await Promise.all(
         req.files.map(f => {
-          const { originalname: name, filename: path } = f;
+          const { originalname: name, filename: path, location } = f;
 
-          const file = File.create({ name, path });
+          const file = File.create({
+            name,
+            path: process.env.NODE_ENV === 'development' ? path : location,
+          });
 
           return file;
         })
