@@ -5,13 +5,16 @@ import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
 import File from '../app/models/File';
+import Address from '../app/models/Address';
+import Product from '../app/models/Product';
+import Transaction from '../app/models/Transaction';
 
-const models = [User, File];
+const models = [User, File, Product, Address, Transaction];
 
 class Database {
   constructor() {
     this.init();
-    this.mongo();
+    // this.mongo();
   }
 
   init() {

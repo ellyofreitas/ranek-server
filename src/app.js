@@ -19,7 +19,11 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
-    this.server.use(cors());
+    this.server.use(
+      cors({
+        exposedHeaders: 'x-total-count',
+      })
+    );
     this.server.use('/', express.static(resolve(__dirname, '..', 'public')));
     this.server.use(
       '/files',

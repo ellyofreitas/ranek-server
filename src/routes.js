@@ -3,8 +3,10 @@ import multer from 'multer';
 import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
+import ProductController from './app/controllers/ProductController';
 import SessionController from './app/controllers/SessionController';
-import FileController from './app/controllers/FileController';
+import TransactionController from './app/controllers/TransactionController';
+// import FileController from './app/controllers/FileController';
 
 import AuthMiddleware from './app/middlewares/auth';
 
@@ -18,15 +20,24 @@ routes.post('/users', UserController.store);
 
 routes.post('/sessions', SessionController.store);
 
-routes.use(AuthMiddleware); // Middleware
+routes.get('/products', ProductController.index);
+routes.get('/products/:id', ProductController.show);
 
 // Routes authenticated
 
-routes.get('/users', UserController.index);
+routes.use(AuthMiddleware); // Middleware
+
+routes.get('/sessions', SessionController.show); // Verify
+
+routes.post('/products', upload.array('file'), ProductController.store);
+routes.delete('/products/:id', ProductController.destroy);
+
+routes.get('/users', UserController.show);
 routes.get('/users/:id', UserController.show);
 routes.put('/users/:id', UserController.edit);
 routes.delete('/users/:id', UserController.destroy);
 
-routes.post('/files', upload.array('file'), FileController.store);
+routes.get('/transactions', TransactionController.index);
+routes.post('/transactions', TransactionController.store);
 
 export default routes;
