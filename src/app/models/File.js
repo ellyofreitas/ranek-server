@@ -9,9 +9,11 @@ class File extends Model {
         url: {
           type: Sequelize.VIRTUAL,
           get() {
-            return process.env.NODE_ENV === 'development'
-              ? `${process.env.APP_URL}/files/${this.path}`
-              : this.path;
+            const isUrlPath = String(this.path).includes('http');
+
+            return isUrlPath
+              ? this.path
+              : `${process.env.APP_URL}/files/${this.path}`;
           },
         },
       },
