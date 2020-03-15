@@ -4,7 +4,7 @@ import multerS3 from 'multer-s3';
 import crypto from 'crypto';
 import { extname, resolve } from 'path';
 
-const storageLocal = multer.diskStorage({
+const diskStorage = multer.diskStorage({
   destination: resolve(__dirname, '..', '..', 'tmp', 'uploads'),
   filename: (req, file, cb) => {
     crypto.randomBytes(16, (err, res) => {
@@ -17,7 +17,7 @@ const storageLocal = multer.diskStorage({
   },
 });
 
-const storageS3 = () => {
+const s3Storage = () => {
   const s3 = new aws.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -44,5 +44,5 @@ const storageS3 = () => {
 };
 
 export default {
-  storage: process.env.NODE_ENV === 'development' ? storageLocal : storageS3(),
+  storage: process.env.DISK_STORAGE === true ? diskStorage : s3Storage(),
 };
