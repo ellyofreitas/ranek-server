@@ -5,9 +5,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "sucrase-node src/server.js"
+    "prebuild": "rm -rf dist/* && mkdir -p dist",
+    "build": "babel src -d dist/",
+    "prestart": "yarn build",
+    "start": "node dist/server.js"
   },
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "aws-sdk": "^2.626.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
