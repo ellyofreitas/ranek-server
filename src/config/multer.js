@@ -37,7 +37,10 @@ const s3Storage = () => {
           return cb(err);
         }
 
-        return cb(null, res.toString('hex') + extname(file.originalname));
+        return cb(
+          null,
+          `public/${res.toString('hex') + extname(file.originalname)}`
+        );
       });
     },
   });
