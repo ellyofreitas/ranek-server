@@ -47,5 +47,5 @@ const s3Storage = () => {
 };
 
 export default {
-  storage: process.env.DISK_STORAGE === true ? diskStorage : s3Storage(),
+  storage: process.env.DISK_STORAGE ? diskStorage : s3Storage(),
 };
